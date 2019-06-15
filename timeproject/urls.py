@@ -19,4 +19,5 @@ from django.conf.urls import url, include
 urlpatterns = [
     url(r'^', include('apps.time_display.urls')),
     url(r'^random_word/', include('apps.randomWordGenerator.urls')),
+    url(r'^ninja_gold/', include('apps.ninjagold.urls')),
 ]
