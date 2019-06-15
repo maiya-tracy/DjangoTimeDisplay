@@ -65,7 +65,11 @@
       <label for="activities_box">Activities: </label>
       <div name="activities_box" id="activities_box" cols=100% rows="4">
         {% for activity in request.session.activities %}
-          <p>{{ activity.message }}</p>
+          {% if activity.0 == 'bad' %}
+            <p class="text-danger">{{ activity.1 }}</p>
+          {% elif activity.0 == 'good' %}
+            <p class="text-success">{{ activity.1 }}</p>
+          {% endif %}
         {% endfor %}
       </div>
     </div>

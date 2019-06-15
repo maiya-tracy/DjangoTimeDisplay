@@ -7,11 +7,12 @@ def returnRandomNumber(low, high):
     randomNumber = random.randint(low, high+1)
     return randomNumber
 
-def addToSessionActivities(request, message, gorb):
+def addToSessionActivities(request, message, goodorbad):
     if not "activities" in request.session:
         request.session["activities"] = []
-    message_arr = [gorb, message]
+    message_arr = [goodorbad, message]
     request.session["activities"].insert(0,message_arr)
+    print(request.session["activities"])
 
 def addToTotalGold(request, amount):
     if not "total_gold" in request.session:
@@ -21,8 +22,6 @@ def addToTotalGold(request, amount):
     return amount
 
 def index(request):
-    print(returnRandomNumber(-10,20))
-    print("*****")
     return render(request, 'index.html')
 
 def process_gold(request, location):
@@ -39,9 +38,9 @@ def process_gold(request, location):
         elif location == "casino":
             earnings = returnRandomNumber(-50,50)
             if earnings >=0:
-                addToSessionActivities(request, "Earned " + str(earnings) + " golds from the house!" + str(datetime.now()), "good")
+                addToSessionActivities(request, "Won " + str(earnings) + " golds from the casino!" + str(datetime.now()), "good")
             else:
-                addToSessionActivities(request, "Entered a casino and lost " + str(earnings) + " golds... Ouch!" + str(datetime.now()), "bad")
+                addToSessionActivities(request, "Entered a casino and lost " + str(earnings*-1) + " golds... Ouch!" + str(datetime.now()), "bad")
         addToTotalGold(request, earnings)
         return redirect('/ninja_gold/')
 
